@@ -1,0 +1,10 @@
+extends layout
+
+block content
+
+  h1 #{siteName}!
+  
+  h3 Positions
+  ul
+    each val in positions
+      li= val
