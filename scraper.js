@@ -22,9 +22,10 @@ const fetchData = async (url) => {
 
 const getResults = async () => {
   counter += 1
-  try{
+  // try{
     // Need to find the page
     crawlOnAmazon()
+    crawlOnFlipkart()
 
     // Couldn't set up
     // crawlOnCroma()
@@ -32,33 +33,35 @@ const getResults = async () => {
 
     crawlOnGamesTheShop()
     crawlOnVijaySales()
-    }
-  catch(e){
-    console.log(e)
-    getResults()
-  }
-  finally{
-    console.log(counter)
-    console.log('next request')
-  }
+    // }
+  // catch(e){
+  //   console.log(e)
+  //   // getResults()
+  // }
+  // finally{
+  //   console.log(counter)
+  //   console.log('next request')
+  // }
 };
 
 const crawlOnAmazon = async () => {
+  console.log('crawling on amazon')
   try {
     const $ = await fetchData("https://www.amazon.in/dp/B08FV5GC28");
-  
-    
+
+    // sendResponse('Found On Amazon')
     if(typeof $ === 'function'){
       let siteName = await $('#nav-logo-sprites').text();
-
+      
       $('#buy-now-button').each((index, element) => {
         available.add($(element).text());
       });
       console.log(siteName)
       await console.log(available, available.size)
-    
       sendResponse('Found On Amazon')
-    } else{
+
+      crawlOnAmazon()
+    }else{
       setTimeout(()=>{
         crawlOnAmazon()
       },3000)
@@ -98,6 +101,7 @@ const crawlOnCroma = async () => {
       await console.log(available, available.size)
     
       sendResponse('Not On Croma')
+      crawlOnCroma()
     } else{
       setTimeout(()=>{
         crawlOnCroma()
@@ -113,7 +117,7 @@ const crawlOnCroma = async () => {
 
 const crawlOnRelianceDigital = async () => {
   try {
-    const $ = await fetchData("https://www.reliancedigital.in/kelvinator-1-5-ton-3-star-k200-series-kas-x18301b-inverter-split-ac/p/581109875https://www.reliancedigital.in/kelvinator-1-5-ton-3-star-k200-series-kas-x18301b-inverter-split-ac/p/581109875");
+    const $ = await fetchData("https://www.reliancedigital.in/sony-playstation-5-console/p/491936180");
   
     
     if(typeof $ === 'function'){
@@ -151,6 +155,7 @@ const crawlOnGamesTheShop = async () => {
       await console.log(available, available.size)
     
       sendResponse('Found On Games The Shop')
+      crawlOnGamesTheShop()
     } else {
       setTimeout(()=>{
         crawlOnGamesTheShop()
@@ -184,6 +189,7 @@ const crawlOnVijaySales = async () => {
       await console.log(available, available.size)
     
       sendResponse('Found On Vijay Sales')
+      crawlOnVijaySales()
     } else {
       setTimeout(()=>{
         crawlOnVijaySales()
@@ -198,6 +204,37 @@ const crawlOnVijaySales = async () => {
   }
 }
 
+const crawlOnFlipkart = async () => {
+  try {
+    const $ = await fetchData("https://www.flipkart.com/sony-playstation-5-cfi-1008a01r-825-gb-astro-s-playroom/p/itma0201bdea62fa");
+  
+    if(typeof $ === 'function'){
+      let siteName = await $('#comp-text').text();
+      $('._2KpZ6l _2U9uOA ihZ75k _3AWRsL').each((index, element) => {
+        let style = $(element).css()
+        console.log('Available')
+        available.add($(element).text());
+      });
+      console.log(siteName)
+      await console.log(available, available.size)
+      
+      sendResponse('Found On Vijay Sales')
+
+      crawlOnFlipkart()
+    } else {
+      setTimeout(()=>{
+        crawlOnFlipkart()
+      },3000)
+    }
+  }
+  catch(err){
+    console.log(err)
+    setTimeout(()=>{
+      crawlOnFlipkart()
+    },3000)
+  }
+}
+
 // https://shopatsc.com/collections/playstation-5/products/playstation-5-console
 const shopatsc = async () => {
 }
@@ -205,7 +242,7 @@ const shopatsc = async () => {
 const sendResponse = (message) => {
   if(available.size == 0){
     setTimeout(()=>{
-      getResults()
+      return false
     },3000)
   }else{
     let i = 0
