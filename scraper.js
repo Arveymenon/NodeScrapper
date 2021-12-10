@@ -36,7 +36,6 @@ const getResults = async () => {
     // crawlOnVijaySales()
     // }
 
-    
 };
 
 const crawlOnAmazon = async () => {
@@ -78,6 +77,7 @@ const crawlOnFlipkart = async () => {
     
     // Actual Link
     const $ = await fetchData("https://www.flipkart.com/sony-playstation-5-cfi-1008a01r-825-gb-astro-s-playroom/p/itma0201bdea62fa");
+    
     if(typeof $ === 'function'){
       let siteName = await $('#comp-text').text();
 
