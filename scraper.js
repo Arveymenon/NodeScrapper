@@ -15,62 +15,148 @@ const fetchData = async (url) => {
     return cheerio.load(result.data);
   }
   catch(e){
-    console.log("scraping failed for: "+url)
+    // console.log("scraping failed for: "+url)
     return false
   }
 };
 
 const getResults = async () => {
   counter += 1
-  // try{
     // Need to find the page
     crawlOnAmazon()
     crawlOnFlipkart()
+    crawlOnGamesTheShop()
+    crawlOnShopAtSC()
 
     // Couldn't set up
     // crawlOnCroma()
     // crawlOnRelianceDigital()
 
-    crawlOnGamesTheShop()
-    crawlOnVijaySales()
+    // Update links For
+    // crawlOnVijaySales()
     // }
-  // catch(e){
-  //   console.log(e)
-  //   // getResults()
-  // }
-  // finally{
-  //   console.log(counter)
-  //   console.log('next request')
-  // }
 };
 
 const crawlOnAmazon = async () => {
-  console.log('crawling on amazon')
+  console.log('crawling on Amazon', new Date().toISOString())
   try {
-    const $ = await fetchData("https://www.amazon.in/dp/B08FV5GC28");
 
-    // sendResponse('Found On Amazon')
+    // Old Link
+    // const $ = await fetchData("https://www.amazon.in/dp/B08FV5GC28");
+    // New Link
+    const $ = await fetchData("https://www.amazon.in/Sony-Playstation-Standard-Console-Ultra/dp/B08FC5L3RG");
+    
+    // Testing Link (Points to the controller)
+    // const $ = await fetchData("https://www.amazon.in/Sony-CFI-ZCT1W-DualSense-wireless-controller/dp/B08GZ6QNTC/ref=dp_prsubs_2?pd_rd_i=B08GZ6QNTC&psc=1");
+
     if(typeof $ === 'function'){
-      let siteName = await $('#nav-logo-sprites').text();
-      
-      $('#buy-now-button').each((index, element) => {
-        available.add($(element).text());
-      });
-      console.log(siteName)
-      await console.log(available, available.size)
-      sendResponse('Found On Amazon')
-
-      crawlOnAmazon()
-    }else{
-      setTimeout(()=>{
-        crawlOnAmazon()
-      },3000)
-    }
-  }
-  catch(err){
-    console.log(err)
+        let siteName = await $('#nav-logo-sprites').text();
+        
+        $('#buy-now-button').each((index, element) => {
+          available.add($(element).text());
+        });
+        if(available.size > 0){
+          notifyResponse('Found PS On Amazon')
+        }
+      }
+    crawlOnAmazon()
+  } catch(err) {
+    console.log("Amazon Scrapping throwing error")
     setTimeout(()=>{
       crawlOnAmazon()
+    },3000)
+  }
+}
+
+const crawlOnFlipkart = async () => {
+  console.log('crawling on flipkart', new Date().toISOString())
+  try {
+    // Test Link to controller
+    // const $ = await fetchData("https://www.flipkart.com/sony-ps5-dualsense-wireless-controller/p/itm236e858323977");
+    
+    // Actual Link
+    const $ = await fetchData("https://www.flipkart.com/sony-playstation-5-cfi-1008a01r-825-gb-astro-s-playroom/p/itma0201bdea62fa");
+    if(typeof $ === 'function'){
+      let siteName = await $('#comp-text').text();
+
+      $('.dTTu2M').each((index, element) => {
+        available.add(1);
+      });
+      
+      if(available.size > 0){
+        notifyResponse('Found On Flipkart')
+      }
+    }
+    setTimeout(()=>{
+      crawlOnFlipkart()
+    },3000)
+  }
+  catch(err){
+    // console.log(err)
+    setTimeout(()=>{
+      crawlOnFlipkart()
+    },3000)
+  }
+}
+
+const crawlOnGamesTheShop = async () => {
+  console.log("crawling on games the shop at",new Date().toISOString())
+  try {
+    // actual link
+    const $ = await fetchData("https://www.gamestheshop.com/PlayStation-5-Console/5111");
+    
+    // test link
+    // const $ = await fetchData("https://www.gamestheshop.com/Dualsense-Wireless-Controller-Midnight-Black/5738");
+    
+    if(typeof $ === 'function'){
+      let siteName = await $('#ctl00_lblcopy').text();
+      $('.addToCart-nw').each((index, element) => {
+        available.add($(element).text());
+      });
+      
+      if(available.size > 0){
+        notifyResponse('Found On Games The Shop')
+      }
+    }
+    setTimeout(()=>{
+      crawlOnGamesTheShop()
+    },3000)
+  }
+  catch(err){
+    // console.log(err)
+    setTimeout(()=>{
+      crawlOnGamesTheShop()
+    },3000)
+  }
+}
+
+const crawlOnShopAtSC = async () => {
+  console.log("crawling on Shop At SC",new Date().toISOString())
+  try {
+    // actual link
+    // const $ = await fetchData("https://shopatsc.com/collections/playstation-5/products/playstation-5-console-store");
+    
+    // test link
+    const $ = await fetchData("https://shopatsc.com/products/ps4-1tb-hzd-ce-gtsii-r-c-ps-3m");
+    
+    if(typeof $ === 'function'){
+      let siteName = await $('#ctl00_lblcopy').text();
+      $('#product-add-to-cart').each((index, element) => {
+        available.add(1);
+      });
+      
+      if(available.size > 0){
+        notifyResponse('Found On Shop At SC')
+      }
+    }
+    setTimeout(()=>{
+      crawlOnShopAtSC()
+    },3000)
+  }
+  catch(err){
+    // console.log(err)
+    setTimeout(()=>{
+      crawlOnShopAtSC()
     },3000)
   }
 }
@@ -84,23 +170,19 @@ const crawlOnCroma = async () => {
     if(typeof $ === 'function'){
       let siteName = await $('.copywrite').text();
       $('.threehr-pincode').each((index, element) => {
-        console.log($(element).text())
         if($(element).text())
 
         available.add($(element).text());
       });
       
       // $('.out-of-stock-msg-pdp').each((index, element) => {
-      //   console.log($(element).text())
+      // console.log($(element).text())
       //   if($(element).text())
 
       //   available.add($(element).text());
       // });
-
-      console.log("Site Name: ",siteName)
-      await console.log(available, available.size)
     
-      sendResponse('Not On Croma')
+      notifyResponse('Not On Croma')
       crawlOnCroma()
     } else{
       setTimeout(()=>{
@@ -125,10 +207,10 @@ const crawlOnRelianceDigital = async () => {
       $('#add_to_cart_main_btn').each((index, element) => {
         available.add($(element).text());
       });
-      console.log(siteName)
-      await console.log(available, available.size)
+      // console.log(siteName)
+      await // console.log(available, available.size)
     
-      sendResponse('Found On Reliance Digital')
+      notifyResponse('Found On Reliance Digital')
     } else {
       setTimeout(()=>{
         crawlOnRelianceDigital()
@@ -136,37 +218,8 @@ const crawlOnRelianceDigital = async () => {
     }
   }
   catch(err){
-    console.log(err)
+    // console.log(err)
     crawlOnRelianceDigital()
-  }
-}
-
-const crawlOnGamesTheShop = async () => {
-  try {
-    const $ = await fetchData("https://www.gamestheshop.com/PlayStation-5-Console/5111");
-  
-    
-    if(typeof $ === 'function'){
-      let siteName = await $('#ctl00_lblcopy').text();
-      $('.addToCart-nw').each((index, element) => {
-        available.add($(element).text());
-      });
-      console.log(siteName)
-      await console.log(available, available.size)
-    
-      sendResponse('Found On Games The Shop')
-      crawlOnGamesTheShop()
-    } else {
-      setTimeout(()=>{
-        crawlOnGamesTheShop()
-      },3000)
-    }
-  }
-  catch(err){
-    console.log(err)
-    setTimeout(()=>{
-      crawlOnGamesTheShop()
-    },3000)
   }
 }
 
@@ -181,14 +234,14 @@ const crawlOnVijaySales = async () => {
         let style = $(element).css()
 
         if(style.display != 'none'){
-          console.log('Available')
+          // console.log('Available')
           available.add($(element).text());
         }
       });
-      console.log(siteName)
-      await console.log(available, available.size)
+      // console.log(siteName)
+      await // console.log(available, available.size)
     
-      sendResponse('Found On Vijay Sales')
+      notifyResponse('Found On Vijay Sales')
       crawlOnVijaySales()
     } else {
       setTimeout(()=>{
@@ -197,64 +250,19 @@ const crawlOnVijaySales = async () => {
     }
   }
   catch(err){
-    console.log(err)
+    // console.log(err)
     setTimeout(()=>{
       crawlOnVijaySales()
     },3000)
   }
 }
 
-const crawlOnFlipkart = async () => {
-  try {
-    const $ = await fetchData("https://www.flipkart.com/sony-playstation-5-cfi-1008a01r-825-gb-astro-s-playroom/p/itma0201bdea62fa");
-  
-    if(typeof $ === 'function'){
-      let siteName = await $('#comp-text').text();
-      $('._2KpZ6l _2U9uOA ihZ75k _3AWRsL').each((index, element) => {
-        let style = $(element).css()
-        console.log('Available')
-        available.add($(element).text());
-      });
-      console.log(siteName)
-      await console.log(available, available.size)
-      
-      sendResponse('Found On Vijay Sales')
-
-      crawlOnFlipkart()
-    } else {
-      setTimeout(()=>{
-        crawlOnFlipkart()
-      },3000)
-    }
-  }
-  catch(err){
-    console.log(err)
-    setTimeout(()=>{
-      crawlOnFlipkart()
-    },3000)
-  }
-}
-
-// https://shopatsc.com/collections/playstation-5/products/playstation-5-console
-const shopatsc = async () => {
-}
-
-const sendResponse = (message) => {
-  if(available.size == 0){
-    setTimeout(()=>{
-      return false
-    },3000)
-  }else{
-    let i = 0
-    while(i < 10){
-      console.log(message, "Fire Push Notification To 6fab8e1c-3c2c-46fc-8596-1c52d96202b5")
-      createNotification(message)
-      i+=1
-    }
-    return {
-      available: [...available].sort(),
-      siteName
-    };
+notifyResponse = (message) => {
+  let i = 0
+  while(i < 10){
+    // console.log(message, "Fire Push Notification To 6fab8e1c-3c2c-46fc-8596-1c52d96202b5")
+    createNotification(message)
+    i+=1
   }
 }
 
@@ -274,14 +282,14 @@ var sendNotification = function(data) {
   var https = require('https');
   var req = https.request(options, function(res) {  
     res.on('data', function(data) {
-      console.log("Response:");
-      console.log(JSON.parse(data));
+      // console.log("Response:");
+      // console.log(JSON.parse(data));
     });
   });
   
   req.on('error', function(e) {
-    console.log("ERROR:");
-    console.log(e);
+    // console.log("ERROR:");
+    // console.log(e);
   });
   
   req.write(JSON.stringify(data));
