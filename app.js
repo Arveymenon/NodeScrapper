@@ -1,11 +1,13 @@
 var createError = require('http-errors');
 var express = require('express');
+const axios = require("axios");
 
-require('./scraper')()
 
 const fqdn = require('./services/fqdn');
+const env = require('./env');
 
 var app = express();
+require('./scraper')()
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -30,5 +32,11 @@ app.listen(port, () => {
 })
 
 fqdn.then(path => { 
-  console.log(path)
+  console.log(path.includes("heroku"));
+  if(path.includes("heroku")){
+    // open heroku page
+    setInterval(()=>{
+      axios.get(env.heroku.path)
+    },60000)
+  }
 })

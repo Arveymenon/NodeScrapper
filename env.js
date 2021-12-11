@@ -1,4 +1,7 @@
 const env = {
+    heroku:{
+        path: "https://arveyscrapper.herokuapp.com/"
+    },
     mode: 'production',
     Links: {
         amazon: {
