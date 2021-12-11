@@ -64,7 +64,7 @@ const crawlOnAmazon = async () => {
     console.log("Amazon Scrapping throwing error")
     setTimeout(()=>{
       crawlOnAmazon()
-    },3000)
+    },5000)
   }
 }
 
@@ -89,13 +89,13 @@ const crawlOnFlipkart = async () => {
     }
     setTimeout(()=>{
       crawlOnFlipkart()
-    },3000)
+    },5000)
   }
   catch(err){
     // console.log(err)
     setTimeout(()=>{
       crawlOnFlipkart()
-    },3000)
+    },5000)
   }
 }
 
@@ -119,13 +119,13 @@ const crawlOnGamesTheShop = async () => {
     }
     setTimeout(()=>{
       crawlOnGamesTheShop()
-    },3000)
+    },5000)
   }
   catch(err){
     // console.log(err)
     setTimeout(()=>{
       crawlOnGamesTheShop()
-    },3000)
+    },5000)
   }
 }
 
@@ -149,13 +149,13 @@ const crawlOnShopAtSC = async () => {
     }
     setTimeout(()=>{
       crawlOnShopAtSC()
-    },3000)
+    },5000)
   }
   catch(err){
     // console.log(err)
     setTimeout(()=>{
       crawlOnShopAtSC()
-    },3000)
+    },5000)
   }
 }
 
@@ -185,13 +185,13 @@ const crawlOnCroma = async () => {
     } else{
       setTimeout(()=>{
         crawlOnCroma()
-      },3000)
+      },5000)
     }
   }
   catch(err){
     setTimeout(()=>{
       crawlOnCroma()
-    },3000)
+    },5000)
   }
 }
 
@@ -212,7 +212,7 @@ const crawlOnRelianceDigital = async () => {
     } else {
       setTimeout(()=>{
         crawlOnRelianceDigital()
-      },3000)
+      },5000)
     }
   }
   catch(err){
@@ -244,14 +244,14 @@ const crawlOnVijaySales = async () => {
     } else {
       setTimeout(()=>{
         crawlOnVijaySales()
-      },3000)
+      },5000)
     }
   }
   catch(err){
     // console.log(err)
     setTimeout(()=>{
       crawlOnVijaySales()
-    },3000)
+    },5000)
   }
 }
 
