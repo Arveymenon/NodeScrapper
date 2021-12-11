@@ -45,10 +45,10 @@ const crawlOnAmazon = async () => {
     // Old Link
     // const $ = await fetchData("https://www.amazon.in/dp/B08FV5GC28");
     // New Link
-    const $ = await fetchData("https://www.amazon.in/Sony-Playstation-Standard-Console-Ultra/dp/B08FC5L3RG");
+    // const $ = await fetchData("https://www.amazon.in/Sony-Playstation-Standard-Console-Ultra/dp/B08FC5L3RG");
     
     // Testing Link (Points to the controller)
-    // const $ = await fetchData("https://www.amazon.in/Sony-CFI-ZCT1W-DualSense-wireless-controller/dp/B08GZ6QNTC/ref=dp_prsubs_2?pd_rd_i=B08GZ6QNTC&psc=1");
+    const $ = await fetchData("https://www.amazon.in/Sony-CFI-ZCT1W-DualSense-wireless-controller/dp/B08GZ6QNTC/ref=dp_prsubs_2?pd_rd_i=B08GZ6QNTC&psc=1");
 
     if(typeof $ === 'function'){
         let siteName = await $('#nav-logo-sprites').text();
