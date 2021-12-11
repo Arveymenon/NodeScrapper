@@ -56,7 +56,7 @@ const crawlOnAmazon = async () => {
         $('#buy-now-button').each((index, element) => {
           available.add($(element).text());
         });
-        if(available.size > 0){
+        if(available.size() > 0){
           notifyResponse('Found PS On Amazon')
         }
       }
@@ -85,7 +85,7 @@ const crawlOnFlipkart = async () => {
         available.add(1);
       });
       
-      if(available.size > 0){
+      if(available.size() > 0){
         notifyResponse('Found On Flipkart')
       }
     }
@@ -116,7 +116,7 @@ const crawlOnGamesTheShop = async () => {
         available.add($(element).text());
       });
       
-      if(available.size > 0){
+      if(available.size() > 0){
         notifyResponse('Found On Games The Shop')
       }
     }
@@ -147,7 +147,7 @@ const crawlOnShopAtSC = async () => {
         available.add(1);
       });
       
-      if(available.size > 0){
+      if(available.size() > 0){
         notifyResponse('Found On Shop At SC')
       }
     }
@@ -210,7 +210,7 @@ const crawlOnRelianceDigital = async () => {
         available.add($(element).text());
       });
       // console.log(siteName)
-      await // console.log(available, available.size)
+      await // console.log(available, available.size())
     
       notifyResponse('Found On Reliance Digital')
     } else {
@@ -241,7 +241,7 @@ const crawlOnVijaySales = async () => {
         }
       });
       // console.log(siteName)
-      await // console.log(available, available.size)
+      await // console.log(available, available.size())
     
       notifyResponse('Found On Vijay Sales')
       crawlOnVijaySales()
