@@ -7,7 +7,6 @@ const client = new OneSignal.Client('11482de5-db43-43bd-aed4-9ebf163c569d', 'ZWI
 const userClient = new OneSignal.UserClient('6fab8e1c-3c2c-46fc-8596-1c52d96202b5');
 
 let siteName = "";
-const available = new Set();
 var counter = 1
 
 
@@ -44,16 +43,20 @@ const getResults = async () => {
 const crawlOnAmazon = async () => {
   console.log('crawling on Amazon', new Date().toISOString())
   try {
+
+    let available = new Set();
     const $ = await fetchData(env.Links.amazon[env.mode]);
 
     if(typeof $ === 'function'){
         let siteName = await $('#nav-logo-sprites').text();
         
         $('#buy-now-button').each((index, element) => {
-          available.add($(element).text());
+          available.add(1);
         });
+
         if(available.size > 0){
-          notifyResponse('Found PS On Amazon')
+          console.log($('#buy-now-button').html())
+          notifyResponse('Found PS On Amazon' + available.size)
         }
       }
     crawlOnAmazon()
@@ -68,6 +71,8 @@ const crawlOnAmazon = async () => {
 const crawlOnFlipkart = async () => {
   console.log('crawling on flipkart', new Date().toISOString())
   try {
+
+    let available = new Set();
     const $ = await fetchData(env.Links.flipkart[env.mode]);
     
     if(typeof $ === 'function'){
@@ -78,7 +83,8 @@ const crawlOnFlipkart = async () => {
       });
       
       if(available.size > 0){
-        notifyResponse('Found On Flipkart')
+        console.log($('.dTTu2M').html())
+        notifyResponse('Found On Flipkart'+ available.size)
       }
     }
     setTimeout(()=>{
@@ -97,6 +103,7 @@ const crawlOnGamesTheShop = async () => {
   console.log("crawling on games the shop at",new Date().toISOString())
   try {
     
+    let available = new Set();
     const $ = await fetchData(env.Links.GamesTheShop[env.mode]);
     
     if(typeof $ === 'function'){
@@ -106,7 +113,8 @@ const crawlOnGamesTheShop = async () => {
       });
       
       if(available.size > 0){
-        notifyResponse('Found On Games The Shop')
+        console.log($('.addToCart-nw').html())
+        notifyResponse('Found On Games The Shop' + available.size)
       }
     }
     setTimeout(()=>{
@@ -125,6 +133,7 @@ const crawlOnShopAtSC = async () => {
   console.log("crawling on Shop At SC",new Date().toISOString())
   try {
     
+    let available = new Set();
     const $ = await fetchData(env.Links.ShopAtSC[env.mode]);
     
     if(typeof $ === 'function'){
@@ -134,7 +143,8 @@ const crawlOnShopAtSC = async () => {
       });
       
       if(available.size > 0){
-        notifyResponse('Found On Shop At SC')
+        console.log($('#product-add-to-cart').html())
+        notifyResponse('Found On Shop At SC'+ available.size)
       }
     }
     setTimeout(()=>{

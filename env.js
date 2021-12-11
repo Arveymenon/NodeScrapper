@@ -10,8 +10,8 @@ const env = {
             testing: 'https://www.flipkart.com/sony-ps5-dualsense-wireless-controller/p/itm236e858323977'
         },
         GamesTheShop: {
-            production: 'https://www.gamestheshop.com/Dualsense-Wireless-Controller-Midnight-Black/5738',
-            testing: 'https://www.gamestheshop.com/PlayStation-5-Console/5111'
+            production: 'https://www.gamestheshop.com/PlayStation-5-Console/5111',
+            testing: 'https://www.gamestheshop.com/Dualsense-Wireless-Controller-Midnight-Black/5738'
         },
         ShopAtSC: {
             production: 'https://shopatsc.com/collections/playstation-5/products/playstation-5-console-store',
