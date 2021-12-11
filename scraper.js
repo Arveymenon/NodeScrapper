@@ -59,12 +59,14 @@ const crawlOnAmazon = async () => {
           notifyResponse('Found PS On Amazon' + available.size)
         }
       }
-    crawlOnAmazon()
+    setTimeout(()=>{
+      crawlOnAmazon()
+    },3000)
   } catch(err) {
     console.log("Amazon Scrapping throwing error")
     setTimeout(()=>{
       crawlOnAmazon()
-    },5000)
+    },3000)
   }
 }
 
@@ -89,13 +91,13 @@ const crawlOnFlipkart = async () => {
     }
     setTimeout(()=>{
       crawlOnFlipkart()
-    },5000)
+    },3000)
   }
   catch(err){
     // console.log(err)
     setTimeout(()=>{
       crawlOnFlipkart()
-    },5000)
+    },3000)
   }
 }
 
@@ -119,13 +121,13 @@ const crawlOnGamesTheShop = async () => {
     }
     setTimeout(()=>{
       crawlOnGamesTheShop()
-    },5000)
+    },3000)
   }
   catch(err){
     // console.log(err)
     setTimeout(()=>{
       crawlOnGamesTheShop()
-    },5000)
+    },3000)
   }
 }
 
@@ -149,13 +151,13 @@ const crawlOnShopAtSC = async () => {
     }
     setTimeout(()=>{
       crawlOnShopAtSC()
-    },5000)
+    },3000)
   }
   catch(err){
     // console.log(err)
     setTimeout(()=>{
       crawlOnShopAtSC()
-    },5000)
+    },3000)
   }
 }
 
@@ -185,13 +187,13 @@ const crawlOnCroma = async () => {
     } else{
       setTimeout(()=>{
         crawlOnCroma()
-      },5000)
+      },3000)
     }
   }
   catch(err){
     setTimeout(()=>{
       crawlOnCroma()
-    },5000)
+    },3000)
   }
 }
 
@@ -212,7 +214,7 @@ const crawlOnRelianceDigital = async () => {
     } else {
       setTimeout(()=>{
         crawlOnRelianceDigital()
-      },5000)
+      },3000)
     }
   }
   catch(err){
@@ -244,14 +246,14 @@ const crawlOnVijaySales = async () => {
     } else {
       setTimeout(()=>{
         crawlOnVijaySales()
-      },5000)
+      },3000)
     }
   }
   catch(err){
     // console.log(err)
     setTimeout(()=>{
       crawlOnVijaySales()
-    },5000)
+    },3000)
   }
 }
 
