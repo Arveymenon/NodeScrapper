@@ -1,5 +1,6 @@
 const cheerio = require("cheerio");
 const axios = require("axios");
+const env = require('./env');
 
 const OneSignal = require('onesignal-node');
 const client = new OneSignal.Client('11482de5-db43-43bd-aed4-9ebf163c569d', 'ZWI0NTAzNWUtNzg5ZS00ODU5LTg2NTAtNTMxYjZlYmYxMzBm');
@@ -8,6 +9,8 @@ const userClient = new OneSignal.UserClient('6fab8e1c-3c2c-46fc-8596-1c52d96202b
 let siteName = "";
 const available = new Set();
 var counter = 1
+
+
 
 const fetchData = async (url) => {
   try{
@@ -41,14 +44,7 @@ const getResults = async () => {
 const crawlOnAmazon = async () => {
   console.log('crawling on Amazon', new Date().toISOString())
   try {
-
-    // Old Link
-    // const $ = await fetchData("https://www.amazon.in/dp/B08FV5GC28");
-    // New Link
-    // const $ = await fetchData("https://www.amazon.in/Sony-Playstation-Standard-Console-Ultra/dp/B08FC5L3RG");
-    
-    // Testing Link (Points to the controller)
-    const $ = await fetchData("https://www.amazon.in/Sony-CFI-ZCT1W-DualSense-wireless-controller/dp/B08GZ6QNTC/ref=dp_prsubs_2?pd_rd_i=B08GZ6QNTC&psc=1");
+    const $ = await fetchData(env.Links.amazon[env.mode]);
 
     if(typeof $ === 'function'){
         let siteName = await $('#nav-logo-sprites').text();
@@ -56,7 +52,7 @@ const crawlOnAmazon = async () => {
         $('#buy-now-button').each((index, element) => {
           available.add($(element).text());
         });
-        if(available.size() > 0){
+        if(available.size > 0){
           notifyResponse('Found PS On Amazon')
         }
       }
@@ -72,11 +68,7 @@ const crawlOnAmazon = async () => {
 const crawlOnFlipkart = async () => {
   console.log('crawling on flipkart', new Date().toISOString())
   try {
-    // Test Link to controller
-    // const $ = await fetchData("https://www.flipkart.com/sony-ps5-dualsense-wireless-controller/p/itm236e858323977");
-    
-    // Actual Link
-    const $ = await fetchData("https://www.flipkart.com/sony-playstation-5-cfi-1008a01r-825-gb-astro-s-playroom/p/itma0201bdea62fa");
+    const $ = await fetchData(env.Links.flipkart[env.mode]);
     
     if(typeof $ === 'function'){
       let siteName = await $('#comp-text').text();
@@ -85,7 +77,7 @@ const crawlOnFlipkart = async () => {
         available.add(1);
       });
       
-      if(available.size() > 0){
+      if(available.size > 0){
         notifyResponse('Found On Flipkart')
       }
     }
@@ -104,19 +96,16 @@ const crawlOnFlipkart = async () => {
 const crawlOnGamesTheShop = async () => {
   console.log("crawling on games the shop at",new Date().toISOString())
   try {
-    // actual link
-    const $ = await fetchData("https://www.gamestheshop.com/PlayStation-5-Console/5111");
     
-    // test link
-    // const $ = await fetchData("https://www.gamestheshop.com/Dualsense-Wireless-Controller-Midnight-Black/5738");
+    const $ = await fetchData(env.Links.GamesTheShop[env.mode]);
     
     if(typeof $ === 'function'){
       let siteName = await $('#ctl00_lblcopy').text();
       $('.addToCart-nw').each((index, element) => {
-        available.add($(element).text());
+        available.add(1);
       });
       
-      if(available.size() > 0){
+      if(available.size > 0){
         notifyResponse('Found On Games The Shop')
       }
     }
@@ -135,11 +124,8 @@ const crawlOnGamesTheShop = async () => {
 const crawlOnShopAtSC = async () => {
   console.log("crawling on Shop At SC",new Date().toISOString())
   try {
-    // actual link
-    // const $ = await fetchData("https://shopatsc.com/collections/playstation-5/products/playstation-5-console-store");
     
-    // test link
-    const $ = await fetchData("https://shopatsc.com/products/ps4-1tb-hzd-ce-gtsii-r-c-ps-3m");
+    const $ = await fetchData(env.Links.ShopAtSC[env.mode]);
     
     if(typeof $ === 'function'){
       let siteName = await $('#ctl00_lblcopy').text();
@@ -147,7 +133,7 @@ const crawlOnShopAtSC = async () => {
         available.add(1);
       });
       
-      if(available.size() > 0){
+      if(available.size > 0){
         notifyResponse('Found On Shop At SC')
       }
     }
@@ -210,7 +196,7 @@ const crawlOnRelianceDigital = async () => {
         available.add($(element).text());
       });
       // console.log(siteName)
-      await // console.log(available, available.size())
+      await // console.log(available, available.size)
     
       notifyResponse('Found On Reliance Digital')
     } else {
@@ -241,7 +227,7 @@ const crawlOnVijaySales = async () => {
         }
       });
       // console.log(siteName)
-      await // console.log(available, available.size())
+      await // console.log(available, available.size)
     
       notifyResponse('Found On Vijay Sales')
       crawlOnVijaySales()
