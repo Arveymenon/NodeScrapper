@@ -4,15 +4,6 @@ const axios = require("axios");
 const env = require('./env');
 const createNotification = require('./notification');
 
-const OneSignal = require('onesignal-node');
-const client = new OneSignal.Client('11482de5-db43-43bd-aed4-9ebf163c569d', 'ZWI0NTAzNWUtNzg5ZS00ODU5LTg2NTAtNTMxYjZlYmYxMzBm');
-const userClient = new OneSignal.UserClient('6fab8e1c-3c2c-46fc-8596-1c52d96202b5');
-
-let siteName = "";
-var counter = 1
-
-
-
 const fetchData = async (url) => {
   try{
     const result = await axios.get(url);
@@ -25,7 +16,6 @@ const fetchData = async (url) => {
 };
 
 const getResults = async () => {
-  counter += 1
     // Need to find the page
     crawlOnAmazon()
     crawlOnFlipkart()

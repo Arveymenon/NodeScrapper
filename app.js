@@ -1,30 +1,18 @@
 var createError = require('http-errors');
 var express = require('express');
-var os = require("os");
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
 
 require('./scraper')()
 
+const fqdn = require('./services/fqdn');
+
 var app = express();
-
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
-
-// app.use(logger('dev'));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
-console.log(os.hostname());
+
+// c053b682-b617-4722-b25a-953b6d5fcd5e
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -37,4 +25,10 @@ app.use(function(err, req, res, next) {
 });
 
 const port = (process.env.PORT || 9000)
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}!` );
+})
+
+fqdn.then(path => { 
+  console.log(path)
+})
