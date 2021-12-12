@@ -251,7 +251,6 @@ const crawlOnVijaySales = async () => {
 notifyResponse = (message) => {
   let i = 0
   while(i < 10){
-    // console.log(message, "Fire Push Notification To 6fab8e1c-3c2c-46fc-8596-1c52d96202b5")
     createNotification(message)
     i+=1
   }

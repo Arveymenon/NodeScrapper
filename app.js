@@ -31,7 +31,10 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}!` );
 })
 
-fqdn.then(path => { 
+// To keep the project alive on heroku we need to keep the server running and 
+// not crash by sitting idle.
+
+fqdn.then(path => {
   console.log(path.includes("heroku"));
   if(path.includes("heroku")){
     // open heroku page
