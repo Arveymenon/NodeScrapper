@@ -1,7 +1,7 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 const axios = require("axios");
-
 
 const fqdn = require('./services/fqdn');
 const env = require('./env');
@@ -42,4 +42,4 @@ fqdn.then(path => {
       axios.get(env.heroku.path)
     },60000)
   }
-})
+},(err)=>{console.error(err)})

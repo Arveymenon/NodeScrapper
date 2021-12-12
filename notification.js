@@ -1,4 +1,3 @@
-require('dotenv').config();
 var sendNotification = function(data) {
     var headers = {
       "Content-Type": "application/json; charset=utf-8"
@@ -14,15 +13,12 @@ var sendNotification = function(data) {
     
     var https = require('https');
     var req = https.request(options, function(res) {
-      res.on('data', function(data) {
-        console.log("Notification Sent");
-        console.log(JSON.parse(data));
-      });
+      res.on('data', function(data) { });
     });
     
     req.on('error', function(e) {
-      // console.log("ERROR:");
-      // console.log(e);
+      console.error("ERROR:");
+      console.error(e);
     });
     
     req.write(JSON.stringify(data));
@@ -30,7 +26,6 @@ var sendNotification = function(data) {
   };
   
   const createNotification = (message) => {
-    console.log(process.env.ONESIGNAL_APP_ID)
     const notification = {
       app_id: process.env.ONESIGNAL_APP_ID,
       contents: {"en": message},

@@ -20,7 +20,6 @@ const env = {
             production: 'https://shopatsc.com/collections/playstation-5/products/playstation-5-console-store',
             testing: 'https://shopatsc.com/products/ps4-1tb-hzd-ce-gtsii-r-c-ps-3m'
         }
-
     }
 }
 
