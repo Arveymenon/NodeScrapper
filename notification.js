@@ -30,6 +30,7 @@ var sendNotification = function(data) {
   };
   
   const createNotification = (message) => {
+    console.log(process.env.ONESIGNAL_APP_ID)
     const notification = {
       app_id: process.env.ONESIGNAL_APP_ID,
       contents: {"en": message},
