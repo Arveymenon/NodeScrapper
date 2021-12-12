@@ -16,7 +16,7 @@ var sendNotification = function(data) {
     var req = https.request(options, function(res) {
       res.on('data', function(data) {
         console.log("Notification Sent");
-        // console.log(JSON.parse(data));
+        console.log(JSON.parse(data));
       });
     });
     
