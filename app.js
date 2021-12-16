@@ -1,39 +1,32 @@
 require('dotenv').config();
-var createError = require('http-errors');
 var express = require('express');
+const bodyParser = require('body-parser');
+
 const axios = require("axios");
 
+
+const routing = require('./routes/route');
 const fqdn = require('./services/fqdn');
 const env = require('./env');
+const dbconfig = require('./services/dbconfig');
 
 var app = express();
-require('./scraper')()
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+app.use(bodyParser.json())
 
-// c053b682-b617-4722-b25a-953b6d5fcd5e
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+dbconfig()
+routing(app)
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
 
 const port = (process.env.PORT || 9000)
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!` );
 })
 
+// require('./scraper')()
+
 // To keep the project alive on heroku we need to keep the server running and 
 // not crash by sitting idle.
-
 fqdn.then(path => {
   console.log(path.includes("heroku"));
   if(path.includes("heroku")){
